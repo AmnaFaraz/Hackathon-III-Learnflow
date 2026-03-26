@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #080B14;
+  --surface: #0D1117;
+  --surface-2: #161B22;
+  --border: #21262D;
+  --accent: #00D4FF;
+  --text-primary: #E6EDF3;
+  --text-secondary: #8B949E;
+  --success: #3FB950;
+  --warning: #FFD700;
+  --error: #FF4444;
+  --beginner: #FF4444;
+  --learning: #FFD700;
+  --proficient: #3FB950;
+  --mastered: #00D4FF;
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Monaco editor override */
+.monaco-container { border-radius: 8px; overflow: hidden; }
+
+/* Mastery level colors */
+.level-beginner { color: var(--beginner); }
+.level-learning { color: var(--learning); }
+.level-proficient { color: var(--proficient); }
+.level-mastered { color: var(--mastered); }
+
+/* Progress bar */
+@keyframes progress-fill {
+  from { width: 0; }
+  to { width: var(--progress-width); }
+}
+.progress-bar {
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
