@@ -1,29 +1,30 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-export default function TopicPage({
+export default async function TopicPage({
   params,
 }: {
-  params: { module: string; topic: string };
+  params: Promise<{ module: string; topic: string }>;
 }) {
+  const { module, topic } = await params;
   return (
     <div className="min-h-screen" style={{ background: "var(--bg)" }}>
       <nav className="flex items-center gap-3 px-6 py-4 border-b" style={{ borderColor: "var(--border)" }}>
         <Link href="/learn" className="text-[var(--text-secondary)]"><ArrowLeft size={18} /></Link>
         <span className="font-semibold text-[var(--text-primary)] capitalize">
-          {params.module.replace(/-/g, " ")} — {params.topic}
+          {module.replace(/-/g, " ")} — {topic}
         </span>
       </nav>
       <main className="max-w-3xl mx-auto px-4 py-8 flex gap-6">
         {/* Content */}
         <article className="flex-1">
           <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-4 capitalize">
-            {params.topic.replace(/-/g, " ")}
+            {topic.replace(/-/g, " ")}
           </h1>
           <div className="text-[var(--text-secondary)] text-sm leading-relaxed space-y-4">
             <p>
-              Module: <span className="text-[var(--accent)]">{params.module}</span> |
-              Topic: <span className="text-[var(--accent)]">{params.topic}</span>
+              Module: <span className="text-[var(--accent)]">{module}</span> |
+              Topic: <span className="text-[var(--accent)]">{topic}</span>
             </p>
             <p>Content loading... Connect the backend to load AI-generated explanations.</p>
           </div>
