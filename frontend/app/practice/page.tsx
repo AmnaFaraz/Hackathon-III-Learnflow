@@ -33,6 +33,7 @@ export default function PracticePage() {
     { role: "assistant", content: "Hi! I can help review your code, debug errors, or explain concepts. What do you need?" }
   ]);
   const [chatLoading, setChatLoading] = useState(false);
+  const [exercise, setExercise] = useState<any>(null);
 
   const runCode = useCallback(async () => {
     setRunning(true);
@@ -48,6 +49,32 @@ export default function PracticePage() {
       setRunning(false);
     }
   }, [code]);
+
+  const generateExercise = async () => {
+    setOutput("Generating new exercise...");
+    try {
+      const ex = await api.generateExercise("basics", "medium");
+      setExercise(ex);
+      setCode(ex.starter_code || "");
+      setOutput(`Exercise: ${ex.title}\n\n${ex.description}`);
+    } catch (e) {
+      setOutput("Failed to generate exercise.");
+    }
+  };
+
+  const gradeCode = async () => {
+    if (!exercise) return setOutput("Generate an exercise first!");
+    setRunning(true);
+    setOutput("Grading your code...");
+    try {
+      const result = await api.gradeExercise(code, exercise.test_cases, exercise.solution);
+      setOutput(`Score: ${result.score}/100\nPassed: ${result.passed}/${result.total}\n\nFeedback: ${result.feedback}`);
+    } catch {
+      setOutput("Grading failed.");
+    } finally {
+      setRunning(false);
+    }
+  };
 
   const sendChat = async () => {
     const text = chatInput.trim();
@@ -80,6 +107,21 @@ export default function PracticePage() {
         <Link href="/" className="text-[var(--text-secondary)]"><ArrowLeft size={16} /></Link>
         <span className="font-bold text-[var(--text-primary)]">Python Practice</span>
         <div className="ml-auto flex gap-2">
+          <button
+            onClick={generateExercise}
+            className="px-3 py-1.5 rounded-lg text-sm transition-all"
+            style={{ background: "var(--surface-2)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}
+          >
+            New Exercise
+          </button>
+          <button
+            onClick={gradeCode}
+            disabled={running || !exercise}
+            className="px-3 py-1.5 rounded-lg text-sm transition-all"
+            style={{ background: "var(--surface-2)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}
+          >
+            Grade AI
+          </button>
           <button
             onClick={() => setChatOpen(!chatOpen)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all"

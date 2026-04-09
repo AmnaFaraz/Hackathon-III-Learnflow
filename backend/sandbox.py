@@ -6,7 +6,14 @@ Allowed: Python stdlib only
 import subprocess
 import tempfile
 import os
-import resource
+import sys
+
+# resource is only available on Unix
+try:
+    import resource
+except ImportError:
+    resource = None
+
 
 BLOCKED_MODULES = frozenset([
     "requests", "httpx", "socket", "urllib", "urllib2",
@@ -17,8 +24,9 @@ MAX_MEMORY_MB = 50
 
 
 def _set_limits():
-    mem = MAX_MEMORY_MB * 1024 * 1024
-    resource.setrlimit(resource.RLIMIT_AS, (mem, mem))
+    if resource:
+        mem = MAX_MEMORY_MB * 1024 * 1024
+        resource.setrlimit(resource.RLIMIT_AS, (mem, mem))
 
 
 def check_safety(code: str) -> tuple[bool, str]:

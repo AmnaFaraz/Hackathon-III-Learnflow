@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { api } from "@/lib/api";
 
 export default async function TopicPage({
   params,
@@ -7,6 +8,20 @@ export default async function TopicPage({
   params: Promise<{ module: string; topic: string }>;
 }) {
   const { module, topic } = await params;
+  
+  let explanation = "Could not load explanation. Make sure the backend is running.";
+  try {
+    const res = await api.ask({
+      user_id: "demo-user", // In a real app, use auth
+      message: `Explain the topic '${topic}' in the context of '${module}'`,
+      module,
+      level: "beginner"
+    });
+    explanation = res.response as string;
+  } catch (e) {
+    console.error("Failed to fetch explanation:", e);
+  }
+
   return (
     <div className="min-h-screen" style={{ background: "var(--bg)" }}>
       <nav className="flex items-center gap-3 px-6 py-4 border-b" style={{ borderColor: "var(--border)" }}>
@@ -21,12 +36,8 @@ export default async function TopicPage({
           <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-4 capitalize">
             {topic.replace(/-/g, " ")}
           </h1>
-          <div className="text-[var(--text-secondary)] text-sm leading-relaxed space-y-4">
-            <p>
-              Module: <span className="text-[var(--accent)]">{module}</span> |
-              Topic: <span className="text-[var(--accent)]">{topic}</span>
-            </p>
-            <p>Content loading... Connect the backend to load AI-generated explanations.</p>
+          <div className="text-[var(--text-secondary)] text-sm leading-relaxed space-y-4 whitespace-pre-wrap">
+            {explanation}
           </div>
         </article>
 
