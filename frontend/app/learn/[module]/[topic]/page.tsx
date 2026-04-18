@@ -44,9 +44,9 @@ export default async function TopicPage({
         {/* AI tutor panel */}
         <div className="w-64 flex-shrink-0">
           <div className="rounded-xl border p-4" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
-            <p className="text-xs font-medium text-[var(--accent)] mb-2">🤖 AI Tutor</p>
+            <p className="text-xs font-medium text-[var(--accent)] mb-2">🤖 AI Assistent</p>
             <p className="text-xs text-[var(--text-secondary)]">
-              Ask questions about this topic. The tutor uses your current module context to give relevant explanations.
+              Ask questions about this topic. The assistent uses your current module context to give relevant explanations.
             </p>
             <Link href="/practice" className="block mt-3 text-center text-xs px-3 py-1.5 rounded-lg"
               style={{ background: "var(--accent)", color: "#080B14" }}>

@@ -1,6 +1,8 @@
 # LearnFlow — AI Python Learning Platform
 
 **Student:** Amna Faraz | **GitHub:** AmnaFaraz
+**Live Frontend:** [https://panaversity-learnflow.vercel.app](https://panaversity-learnflow.vercel.app)
+**Live Backend:** [https://hackathon-iii-learnflow-backend.onrender.com](https://hackathon-iii-learnflow-backend.onrender.com)
 **Hackathon III** | Points: 1000 pts + 400 bonus
 
 ## Quick Start

@@ -128,7 +128,7 @@ export default function PracticePage() {
             style={{ background: chatOpen ? "var(--accent)" : "var(--surface-2)", color: chatOpen ? "#080B14" : "var(--text-secondary)", border: "1px solid var(--border)" }}
           >
             <Bot size={14} />
-            AI Tutor
+            AI Assistent
           </button>
           <button
             onClick={runCode}
@@ -179,7 +179,7 @@ export default function PracticePage() {
         {chatOpen && (
           <div className="w-80 border-l flex flex-col" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
             <div className="p-3 border-b text-sm font-medium text-[var(--text-primary)]" style={{ borderColor: "var(--border)" }}>
-              🤖 AI Tutor
+              🤖 AI Assistent
             </div>
 
             {/* Messages */}
